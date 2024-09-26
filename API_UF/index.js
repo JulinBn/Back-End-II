@@ -1,5 +1,5 @@
 const express = require('express');
-const colecaoUf = require('./Dados/dados.js');
+const colecaoUf = require('./Dados/dados');
 
 const app = express();
 
