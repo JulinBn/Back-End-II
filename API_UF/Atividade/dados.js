@@ -14,7 +14,15 @@ const colecaoAN = [
         an: "BL",
         nome: "Blue Lock"
     },
-    {},
-    {},
-
+    {
+        id: 4,
+        an: "HP",
+        nome: "Hell Paradise"
+    },
+    {
+        id: 5,
+        an: "FR",
+        nome: "Frieren"
+    },
 ]
+exports.colecaoAN = colecaoAN
