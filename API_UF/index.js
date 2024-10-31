@@ -3,25 +3,18 @@ const colecaoUf = require('./Dados/dados');
 
 const app = express();
 
+const buscraUfsPorNome = (nomeUf) => {
+    return colecaoUf.filter(uf => uf.nome.toLowerCase().incluides(nomeUf.toLowerCase()))
+}
+
 app.get('/ufs/:iduf', (req, res) => {
-    const idUF = parseInt(req.params.iduf);
-    let mensagemErro = 'UF não encontrada';
-    let uf;
-
-    if (!(isNaN(idUF))) {
-        uf = colecaoUf.colecaoUf.find(item => item.id === idUF);
-        if (!uf) {
-            mensagemErro = 'UF não encotrada';
-        }
-} else {
-        mensagemErro = 'Requisição inválida';
-        }
-
-        if (uf) {
-            res.json(uf);
-        }   else {
-            res.status(404).json({"erro": mensagemErro});
-        }
+    const nomeUf  = req.query.busca;
+    const resultado = nomeUf ? buscraUfsPorNome(nomeUf) : colecaoUf;
+    if (resultado.length > 0) {
+        res.json(resultado);
+    } else {
+        res.status(404).send({ "erro" : "Nenhuma UF encontrada" });
+    }
 
 });
 
