@@ -1,6 +1,6 @@
 const express = require(express);
 const { colecaoUf }  = require('../Dados/dados.js');
-const colecaoAN = require('./dados.js');
+const colecaoAN = require('./Dados.js');
 
 const app = express();
 

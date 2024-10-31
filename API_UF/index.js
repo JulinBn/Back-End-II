@@ -1,15 +1,23 @@
-const express = require('express');
-const colecaoUf = require('./Dados/dados');
+import express from 'express';
+import { buscarUfs, buscarUfsPorId, buscarUfsPorNome} from './servicos/servico.js';
 
 const app = express();
 
-const buscraUfsPorNome = (nomeUf) => {
-    return colecaoUf.filter(uf => uf.nome.toLowerCase().incluides(nomeUf.toLowerCase()))
-}
+app.get('/ufs/:iduf', (req,res) => {
+    const uf = buscarUfsPorId(req.params.iduf);
 
-app.get('/ufs/:iduf', (req, res) => {
+    if (uf) {
+        res.json(uf);
+    }else if (isNaN(parseInt(req.params.iduf))) {
+        res.status(404).send({"erro": "Requisição inválida"});
+    } else {
+        res.status(404).send({"erro" : "UF não encontrada"})
+    }
+});
+
+app.get('/ufs', (req, res) => {
     const nomeUf  = req.query.busca;
-    const resultado = nomeUf ? buscraUfsPorNome(nomeUf) : colecaoUf;
+    const resultado = nomeUf ? buscarUfsPorNome(nomeUf) : buscarUfs();
     if (resultado.length > 0) {
         res.json(resultado);
     } else {
