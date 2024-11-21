@@ -20,7 +20,7 @@ export const BuscarPorId = (id) => {
     return resultado;
 };
 
-export const CalcReajuste = (valor, MesInicial, AnoInicial, MesFinal, AnoFinal, Histórico_Inflação) => {
+export const CalcReajuste = (Valor, MesInicial, AnoInicial, MesFinal, AnoFinal, Histórico_Inflação) => {
     const periodo = Histórico_Inflação.filter(item =>
         (item.ano > AnoInicial || (item.ano === AnoInicial && item.mes >= MesInicial)) &&
         (item.ano < AnoFinal || (item.ano === AnoFinal && item.mes <= MesFinal))
@@ -30,7 +30,7 @@ export const CalcReajuste = (valor, MesInicial, AnoInicial, MesFinal, AnoFinal, 
         return { erro: 'parametros invalidos.' };
     }
 
-    let resultado = parseFloat(valor);
+    let resultado = parseFloat(Valor);
     periodo.forEach(item => {
         resultado *= (1 + item.ipca / 100); 
     });
