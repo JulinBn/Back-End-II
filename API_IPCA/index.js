@@ -1,14 +1,14 @@
 import express from 'express';
-import { BuscarTodos, BuscarPorAno, BuscarPorId, CalcularReajuste, validarParametros } from './Serviços/serviço.js';
+import { BuscarTodos, BuscarPorAno, BuscarPorId, CalcReajuste, validarParametros } from './Serviços/serviço.js';
 
 const app = express();
 
 app.get('/historicoIPCA/calculo', (req, res) => {
-    const valor = parseFloat(req.query.Valor);
-    const mesInicial = parseInt(req.query.MesInicial);
-    const anoInicial = parseInt(req.query.AnoInicial);
-    const mesFinal = parseInt(req.query.MesFinal);
-    const anoFinal = parseInt(req.query.AnoFinal);
+    const Valor = parseFloat(req.query.Valor);
+    const MesInicial = parseInt(req.query.MesInicial);
+    const AnoInicial = parseInt(req.query.AnoInicial);
+    const MesFinal = parseInt(req.query.MesFinal);
+    const AnoFinal = parseInt(req.query.AnoFinal);
     
     const erro = validarParametros({ valor, MesInicial, AnoInicial, MesFinal, AnoFinal });
     if (erro) {
@@ -16,7 +16,7 @@ app.get('/historicoIPCA/calculo', (req, res) => {
     }
     const Histórico_Inflação = BuscarTodos();
 
-    const resultado = CalcularReajuste(Valor, MesInicial, AnoInicial, MesFinal, AnoFinal, Histórico_Inflação);
+    const resultado = CalcReajuste(Valor, MesInicial, AnoInicial, MesFinal, AnoFinal, Histórico_Inflação);
 
     if (resultado.erro) {
         return res.status(400).send(resultado);
@@ -38,7 +38,7 @@ app.get('/historicoIPCA', (req, res) => {
 
 app.get('/historicoIPCA/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    const resultado = buscarPorId(id);
+    const resultado = BuscarPorId(id);
     if (resultado.erro) {
         res.status(404).send(resultado);
     } else {
