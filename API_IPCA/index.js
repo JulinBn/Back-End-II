@@ -10,7 +10,7 @@ app.get('/historicoIPCA/calculo', (req, res) => {
     const MesFinal = parseInt(req.query.MesFinal);
     const AnoFinal = parseInt(req.query.AnoFinal);
     
-    const erro = validarParametros({ valor, MesInicial, AnoInicial, MesFinal, AnoFinal });
+    const erro = validarParametros({ Valor, MesInicial, AnoInicial, MesFinal, AnoFinal });
     if (erro) {
         return res.status(400).send({ erro });
     }
